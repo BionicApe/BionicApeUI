@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "AlertWidget.generated.h"
+#include "ConfirmWidget.generated.h"
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnFinishConfirmWidget, bool, bIsSuccessful);
 
 class UButton;
 class UTextBlock;
@@ -14,7 +16,7 @@ class UTextBlock;
  * 
  */
 UCLASS()
-class BIONICAPEUI_API UAlertWidget : public UUserWidget
+class BIONICAPEUI_API UConfirmWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
@@ -24,7 +26,14 @@ protected:
 	UButton* AcceptButton;
 
 	UPROPERTY(meta = (BindWidget))
+	UButton* CancelButton;
+
+	UPROPERTY(meta = (BindWidget))
 	UTextBlock* BodyText;
+public:
+
+	UPROPERTY(BlueprintAssignable, BlueprintReadOnly)
+	FOnFinishConfirmWidget OnFinishConfirmWidget;
 
 protected:
 
@@ -34,7 +43,10 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetBodyText(const FText& NewText);
-		
+	
 	UFUNCTION()
 	void OnAcceptButtonClicked();
+
+	UFUNCTION()
+	void OnCancelButtonClicked();
 };

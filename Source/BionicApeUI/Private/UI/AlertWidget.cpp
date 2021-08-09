@@ -11,7 +11,7 @@ bool UAlertWidget::Initialize()
 	{
 		if (!AcceptButton) return false;
 		if (!BodyText) return false;
-			
+				
 		AcceptButton->OnClicked.AddDynamic(this, &UAlertWidget::OnAcceptButtonClicked);
 	}
 	return false;
